@@ -1,23 +1,24 @@
 import 'dart:convert';
 
-import 'package:mobile/models/task.dart';
+import 'package:todo_list/models/task.dart';
 import 'package:http/http.dart' as http;
 
 abstract class TaskService {
   Future<List<Task>> getTasks();
   Future<Task> getTaskById(int id);
   Future<Task> createTask(Task task);
-  Future updateTask();
+  Future updateTask(int id, Task task);
   Future deleteTask();
 }
 
 class HttpTaskService implements TaskService {
-  String _baseUrl = "http://localhost:3000/task";
+  String _baseUrl = "http://10.0.0.6:3000/task";
 
   @override
   Future<Task> createTask(Task task) async {
     var url = Uri.parse(_baseUrl);
     var response = await http.post(url, body: task.toJson());
+    print(response.body);
     var savedTask = Task.fromJson(jsonDecode(response.body));
     return savedTask;
   }
@@ -40,14 +41,18 @@ class HttpTaskService implements TaskService {
   Future<List<Task>> getTasks() async {
     var url = Uri.parse(_baseUrl);
     var response = await http.get(url);
-    // TODO: implement getTasks
-    throw UnimplementedError();
+    Iterable taskList = json.decode(response.body);
+    List<Task> tasks = List<Task>.from(taskList.map((model) => Task.fromJson(model)));
+    return tasks;
   }
 
   @override
-  Future updateTask() {
-    // TODO: implement updateTask
-    throw UnimplementedError();
+  Future updateTask(int id, Task task) async {
+    var url = Uri.parse('$_baseUrl/$id');
+    var response = await http.post(url, body: task.toJson());
+    print(response.body);
+    var savedTask = Task.fromJson(jsonDecode(response.body));
+
   }
 
 }
