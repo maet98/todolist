@@ -1,0 +1,1 @@
+enum Category { OPEN, IN_PROGRESS, COMPLETED, ALL }

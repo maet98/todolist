@@ -13,7 +13,15 @@ export class TaskService {
     private taskRepository: Repository<Task>
   ) {}
 
-  async  findAll(): Promise<Task[]> {
+  async findByStatus(status: String): Promise<Task[]> {
+    return await this.taskRepository.query(`select * from task where status='${status}'`);
+  }
+
+  async getLastTask(): Promise<Task[]> {
+    return await this.taskRepository.query("select * from task order by due limit 3");
+  }
+
+  async findAll(): Promise<Task[]> {
     return await this.taskRepository.find();
   }
 
@@ -25,8 +33,9 @@ export class TaskService {
     return await this.taskRepository.save(task);
   }
 
-  async update(task: Task): Promise<UpdateResult> {
-    return await this.taskRepository.update(task.id, task);
+  async update(task: Task): Promise<Task> {
+    await this.taskRepository.update(task.id, task);
+    return task;
   }
 
   async delete(id): Promise<DeleteResult> {

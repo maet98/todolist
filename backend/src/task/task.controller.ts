@@ -24,6 +24,18 @@ export class TaskController {
     return await this.taskService.findAll();
   }
 
+
+  @Get("last")
+  async getLastTask() {
+    return await this.taskService.getLastTask();
+  }
+
+  @Get("status/:status")
+  async findByStatus(@Param('status') status: String) {
+    return await this.taskService.findByStatus(status);
+  }
+
+
   @Get(':id')
   async findOne(@Param('id') id: number) {
     const task : Task = await this.taskService.findOne(id);
