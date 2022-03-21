@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list/pages/HomeScreen.dart';
-import 'package:todo_list/pages/Task/ListTaskScreen.dart';
-import 'package:todo_list/pages/Task/addTask.dart';
+import 'package:todo_list/models/enums/category.dart';
+import 'package:todo_list/screens/HomeScreen.dart';
+import 'package:todo_list/screens/Task/ListTaskScreen.dart';
+import 'package:todo_list/screens/Task/AddTaskScreen.dart';
 import 'package:todo_list/services/Services.dart';
 import 'package:todo_list/services/TaskService.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: HomeScreen.routeName,
       routes: {
-        AddTask.routeName: (_) => AddTask(),
+        AddTaskScreen.routeName: (_) => AddTaskScreen(),
         HomeScreen.routeName: (_) => HomeScreen(),
         ListTaskScreen.routeName: (_) => ListTaskScreen(),
       },

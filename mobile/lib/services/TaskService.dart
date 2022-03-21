@@ -4,6 +4,7 @@ import 'package:todo_list/models/enums/category.dart';
 import 'package:todo_list/models/task.dart';
 import 'package:http/http.dart' as http;
 import 'package:todo_list/utils/utils.dart';
+import 'package:todo_list/utils/constant.dart' as Constants;
 
 abstract class TaskService {
   Future<List<Task>> getTasks();
@@ -16,7 +17,7 @@ abstract class TaskService {
 }
 
 class HttpTaskService implements TaskService {
-  String _baseUrl = "http://10.0.0.6:3000/task";
+  String _baseUrl = "${Constants.uriApi}/task";
 
   @override
   Future<Task> createTask(Task task) async {
@@ -37,7 +38,7 @@ class HttpTaskService implements TaskService {
 
   @override
   Future<List<Task>> getTasksByStatus(Category category) async {
-    String status = enumToString(category).toUpperCase();
+    String status = category.toString().split(".")[1].toUpperCase();
     var url = Uri.parse('$_baseUrl/status/$status');
     var response = await http.get(url);
     Iterable taskList = json.decode(response.body);

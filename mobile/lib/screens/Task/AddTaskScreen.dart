@@ -7,17 +7,17 @@ import 'package:todo_list/models/task.dart';
 import 'package:todo_list/services/Services.dart';
 import 'package:todo_list/services/TaskService.dart';
 
-class AddTask extends StatefulWidget {
+class AddTaskScreen extends StatefulWidget {
   static const String routeName = '/addTask';
-  const AddTask({
+  const AddTaskScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  _AddTask createState() => _AddTask();
+  _AddTaskScreen createState() => _AddTaskScreen();
 }
 
-class _AddTask extends State<AddTask> {
+class _AddTaskScreen extends State<AddTaskScreen> {
   Task _task = new Task(title: '', due: DateTime.now());
   TextEditingController _titleController = TextEditingController();
 

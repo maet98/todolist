@@ -2,9 +2,8 @@ import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:todo_list/models/enums/status.dart';
 import 'package:todo_list/models/task.dart';
-import 'package:todo_list/pages/Task/addTask.dart';
-import 'package:todo_list/services/Services.dart';
 
 // ignore: must_be_immutable
 class ListTasks extends StatefulWidget {
@@ -32,7 +31,8 @@ class _ListTasks extends State<ListTasks> {
         date.year == today.year) {
       return DateFormat.Hm().format(date);
     } else {
-      return "${DateFormat.MMMMEEEEd().format(date)} ${DateFormat.Hm().format(date)}";
+      String year = (today.year != date.year) ? ", ${date.year}" : "";
+      return "${DateFormat.MMMMEEEEd().format(date)}$year ${DateFormat.Hm().format(date)}";
     }
   }
 
@@ -44,7 +44,7 @@ class _ListTasks extends State<ListTasks> {
     List<Widget> ans = [];
     if (widget.tasks.length == 0) {
       ans.add(Container(
-          child: Text("There aren't any task yet.",
+          child: Text("No tasks found",
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -52,20 +52,68 @@ class _ListTasks extends State<ListTasks> {
                   color: Colors.grey))));
     } else {
       for (var task in widget.tasks) {
-        ans.add(InkWell(
-          onTap: () async {
-            widget.updateTask(context, task);
-          },
-          child: ListTile(
-            leading: Icon(Icons.offline_bolt),
-            title: Text(task.title),
-            subtitle: Text(
-              getDateFormat(task.due),
-              style:
-                  TextStyle(color: isLate(task.due) ? Colors.red : Colors.grey),
+        if(task.status == Status.COMPLETED) {
+          TextStyle subtitleStyle = TextStyle(
+            color: Colors.grey,
+            decoration: TextDecoration.lineThrough,
+            fontSize: 14,
+          );
+          TextStyle titleStyle = TextStyle(
+            color: Colors.grey ,
+            decoration: TextDecoration.lineThrough,
+            fontSize: 20,
+            fontWeight: FontWeight.w600
+          );
+          ans.add(ListTile(
+              leading: Icon(Icons.check, color: Colors.grey),
+              title: InkWell(
+                onTap: () {
+                  widget.updateTask(task);
+                },
+                child: Text(task.title, style: titleStyle)),
+              subtitle: InkWell(
+                onTap: () {
+                  widget.updateTask(task);
+                },
+                child:  Text(
+                  getDateFormat(task.due),
+                  
+                  style: subtitleStyle,
+              ),
             ),
-          ),
-        ));
+          ));
+        } else {
+         TextStyle titleStyle = TextStyle(
+            color: Colors.black ,
+            fontSize: 20,
+            fontWeight: FontWeight.w600
+          );
+          ans.add(ListTile(
+              leading: Checkbox(
+                value: (task.status == Status.COMPLETED),
+                onChanged: (bool? value) {
+                  task.status = Status.COMPLETED;
+                  widget.updateTask(context, task, direct: true);
+                },
+              ),
+              title: InkWell(
+                onTap: () {
+                  widget.updateTask(task);
+                },
+                child: Text(task.title, style: titleStyle)),
+              subtitle: InkWell(
+                onTap: () {
+                  widget.updateTask(task);
+                },
+                child:  Text(
+                  getDateFormat(task.due),
+                  style:
+                    TextStyle(color: isLate(task.due) ? Colors.red : Colors.grey),
+              ),
+            ),
+          ));
+
+        }
       }
     }
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/models/enums/category.dart';
 
-enumToString(value) =>
-    value.toString().split(".")[1].replaceAll("_", " ").toLowerCase();
+String enumToString(value) =>
+    value.toString().split(".")[1].replaceAll("_", " ");
 
-statusToString(value) => value.toString().split(".")[1];
+String statusToString(value) => value.toString().split(".")[1];
 
 stringToDateTime(value) =>
     (value == null) ? DateTime.now() : DateTime.parse(value as String);
