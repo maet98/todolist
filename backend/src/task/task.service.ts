@@ -18,7 +18,7 @@ export class TaskService {
   }
 
   async getLastTask(): Promise<Task[]> {
-    return await this.taskRepository.query("select * from task where status<>'COMPLETED' order by due limit 3");
+    return await this.taskRepository.query("select * from task where status<>'DONE' order by due limit 3");
   }
 
   async findAll(): Promise<Task[]> {

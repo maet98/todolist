@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:todo_list/models/enums/category.dart';
-import 'package:todo_list/models/task.dart';
 import 'package:todo_list/screens/Task/ListTaskScreen.dart';
 import 'package:todo_list/widgets/CategoryIcon.dart';
 import 'package:transition/transition.dart';
@@ -24,7 +23,11 @@ class CategoryBox extends StatelessWidget {
       elevation: 10,
       child: InkWell(
         onTap: () async {
-          Navigator.push(context, Transition(transitionEffect: TransitionEffect.RIGHT_TO_LEFT, child: ListTaskScreen(category: type)));
+          Navigator.push(
+              context,
+              Transition(
+                  transitionEffect: TransitionEffect.RIGHT_TO_LEFT,
+                  child: ListTaskScreen(category: type)));
         },
         child: Container(
             decoration: BoxDecoration(

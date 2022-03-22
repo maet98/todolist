@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:todo_list/models/enums/category.dart';
 import 'package:todo_list/models/task.dart';
 import 'package:http/http.dart' as http;
-import 'package:todo_list/utils/utils.dart';
 import 'package:todo_list/utils/constant.dart' as Constants;
 
 abstract class TaskService {
@@ -13,7 +12,6 @@ abstract class TaskService {
   Future<Task> getTaskById(int id);
   Future<Task> createTask(Task task);
   Future updateTask(Task task);
-  Future deleteTask();
 }
 
 class HttpTaskService implements TaskService {
@@ -31,19 +29,16 @@ class HttpTaskService implements TaskService {
   }
 
   @override
-  Future deleteTask() {
-    // TODO: implement deleteTask
-    throw UnimplementedError();
-  }
-
-  @override
   Future<List<Task>> getTasksByStatus(Category category) async {
+    print(category);
     String status = category.toString().split(".")[1].toUpperCase();
+    print(status);
     var url = Uri.parse('$_baseUrl/status/$status');
     var response = await http.get(url);
     Iterable taskList = json.decode(response.body);
     List<Task> tasks =
         List<Task>.from(taskList.map((model) => Task.fromJson(model)));
+    print(tasks);
     return tasks;
   }
 
@@ -81,9 +76,10 @@ class HttpTaskService implements TaskService {
     var url = Uri.parse('$_baseUrl/${task.id}');
     var response = await http.put(url, body: task.toJson());
     if (response.statusCode == 200) {
-      var savedTask = Task.fromJson(jsonDecode(response.body));
+      Task.fromJson(jsonDecode(response.body));
     } else {
       var body = json.decode(response.body);
+      print(body);
       throw new Exception(body["message"]);
     }
   }

@@ -1,0 +1,25 @@
+
+> backend@0.0.1 start:dev
+> nest start --watch
+
+c[[90m9:17:40 AM[0m] Starting compilation in watch mode...
+
+[[90m9:17:43 AM[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 18430  - [39m03/21/2022, 9:17:44 AM [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 18430  - [39m03/21/2022, 9:17:44 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +95ms[39m
+[32m[Nest] 18430  - [39m03/21/2022, 9:17:44 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 18430  - [39m03/21/2022, 9:17:44 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +37ms[39m
+[32m[Nest] 18430  - [39m03/21/2022, 9:17:44 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 18430  - [39m03/21/2022, 9:17:44 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTaskModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 18430  - [39m03/21/2022, 9:17:44 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +6ms[39m
+[32m[Nest] 18430  - [39m03/21/2022, 9:17:44 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +3ms[39m
+[32m[Nest] 18430  - [39m03/21/2022, 9:17:44 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mTaskController {/task}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 18430  - [39m03/21/2022, 9:17:44 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/task, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 18430  - [39m03/21/2022, 9:17:44 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/task, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 18430  - [39m03/21/2022, 9:17:44 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/task/last, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 18430  - [39m03/21/2022, 9:17:44 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/task/status/:status, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 18430  - [39m03/21/2022, 9:17:44 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/task/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 18430  - [39m03/21/2022, 9:17:44 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/task/:id, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 18430  - [39m03/21/2022, 9:17:44 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/task/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 18430  - [39m03/21/2022, 9:17:44 AM [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +3ms[39m

@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:todo_list/models/enums/category.dart';
@@ -7,7 +5,6 @@ import 'package:todo_list/models/enums/status.dart';
 import 'package:todo_list/models/task.dart';
 import 'package:todo_list/screens/Task/AddTaskScreen.dart';
 import 'package:todo_list/services/Services.dart';
-import 'package:todo_list/services/TaskService.dart';
 import 'package:todo_list/utils/utils.dart';
 import 'package:todo_list/widgets/CategoryBox.dart';
 import 'package:todo_list/widgets/CategoryIcon.dart';
@@ -29,7 +26,7 @@ class _HomeScreen extends State<HomeScreen> {
   Map<Status, int> mapTask = {
     Status.OPEN: 0,
     Status.IN_PROGRESS: 0,
-    Status.COMPLETED: 0,
+    Status.DONE: 0,
   };
   int total = 0;
 
@@ -48,7 +45,7 @@ class _HomeScreen extends State<HomeScreen> {
         mapTask = {
           Status.OPEN: 0,
           Status.IN_PROGRESS: 0,
-          Status.COMPLETED: 0,
+          Status.DONE: 0,
         };
         for (var task in value) {
           mapTask.update(task.status, (value) => value + 1);
@@ -57,15 +54,16 @@ class _HomeScreen extends State<HomeScreen> {
     });
   }
 
-  void updateTask(BuildContext context, Task task, {direct : false}) async {
-    if(direct) {
+  void updateTask(BuildContext context, Task task, {direct: false}) async {
+    if (direct) {
       Services.of(context)!.taskService.updateTask(task).then((value) {
         getLastThree(context);
         getMapOfCounts(context);
       });
     } else {
-      var updatedTask =
-          await Navigator.pushNamed(context, AddTaskScreen.routeName, arguments: task);
+      var updatedTask = await Navigator.pushNamed(
+          context, AddTaskScreen.routeName,
+          arguments: task);
       if (updatedTask != null) {
         var uTask = updatedTask as Task;
         int index =
@@ -83,6 +81,7 @@ class _HomeScreen extends State<HomeScreen> {
       getLastThree(context);
       getMapOfCounts(context);
     });
+    super.initState();
   }
 
   List<Widget> getCategoryBoxes() {
@@ -113,30 +112,36 @@ class _HomeScreen extends State<HomeScreen> {
         backgroundColor: Colors.white,
       ),
       body: RefreshIndicator(
-        onRefresh: () async {
-          getLastThree(context);
-          getMapOfCounts(context);
-        },
-        child: ListView(children: [
-        Container(
-            height: 200,
-            child: GridView.count(
-                padding: const EdgeInsets.all(8),
-                physics: NeverScrollableScrollPhysics(),
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8,
-                childAspectRatio: 2.3,
-                crossAxisCount: 2,
-                children: getCategoryBoxes())),
-        Expanded(
-            child: ListTasks(
-                tasks: this.lastThree,
-                refresh: getLastThree,
-                updateTask: updateTask))
-      ])),
+          onRefresh: () async {
+            getLastThree(context);
+            getMapOfCounts(context);
+          },
+          child: Column(children: [
+            Container(
+                height: 200,
+                child: GridView.count(
+                    padding: const EdgeInsets.all(8),
+                    physics: NeverScrollableScrollPhysics(),
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                    childAspectRatio: 2.3,
+                    crossAxisCount: 2,
+                    children: getCategoryBoxes())),
+            Expanded(
+                child: ListTasks(
+                    tasks: this.lastThree,
+                    refresh: getLastThree,
+                    updateTask: updateTask))
+          ])),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          Navigator.push(context, Transition(transitionEffect: TransitionEffect.SCALE,child: AddTaskScreen()));
+          await Navigator.push(
+              context,
+              Transition(
+                  transitionEffect: TransitionEffect.SCALE,
+                  child: AddTaskScreen()));
+          getLastThree(context);
+          getMapOfCounts(context);
         },
         tooltip: 'Add Task',
         child: Icon(Icons.add),

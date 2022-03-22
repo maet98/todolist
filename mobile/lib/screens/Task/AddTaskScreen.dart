@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:todo_list/models/enums/status.dart';
 import 'package:todo_list/models/task.dart';
 import 'package:todo_list/services/Services.dart';
-import 'package:todo_list/services/TaskService.dart';
 
 class AddTaskScreen extends StatefulWidget {
   static const String routeName = '/addTask';
@@ -142,38 +141,42 @@ class _AddTaskScreen extends State<AddTaskScreen> {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 24),
                           )),
-                      InputDecorator(
-                          decoration: InputDecoration(labelText: "Status:"),
-                          child: DropdownButtonHideUnderline(
-                              child: DropdownButton<Status>(
-                            value: this._task.status,
-                            isExpanded: false,
-                            isDense: true,
-                            icon: const Icon(Icons.arrow_downward),
-                            elevation: 16,
-                            style: const TextStyle(color: Colors.deepPurple),
-                            underline: Container(
-                              height: 2,
-                              color: Colors.deepPurpleAccent,
-                            ),
-                            onChanged: (Status? newValue) {
-                              setState(() {
-                                this._task.status = newValue!;
-                              });
-                            },
-                            items: Status.values
-                                .map<DropdownMenuItem<Status>>((Status value) {
-                              var text = value
-                                  .toString()
-                                  .split(".")[1]
-                                  .toLowerCase()
-                                  .replaceAll("_", " ");
-                              return DropdownMenuItem<Status>(
-                                value: value,
-                                child: Text(text),
-                              );
-                            }).toList(),
-                          )))
+                      (this._task.id > 0)
+                          ? InputDecorator(
+                              decoration: InputDecoration(labelText: "Status:"),
+                              child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<Status>(
+                                value: this._task.status,
+                                isExpanded: false,
+                                isDense: true,
+                                icon: const Icon(Icons.arrow_downward),
+                                elevation: 16,
+                                style:
+                                    const TextStyle(color: Colors.deepPurple),
+                                underline: Container(
+                                  height: 2,
+                                  color: Colors.deepPurpleAccent,
+                                ),
+                                onChanged: (Status? newValue) {
+                                  setState(() {
+                                    this._task.status = newValue!;
+                                  });
+                                },
+                                items: Status.values
+                                    .map<DropdownMenuItem<Status>>(
+                                        (Status value) {
+                                  var text = value
+                                      .toString()
+                                      .split(".")[1]
+                                      .toLowerCase()
+                                      .replaceAll("_", " ");
+                                  return DropdownMenuItem<Status>(
+                                    value: value,
+                                    child: Text(text),
+                                  );
+                                }).toList(),
+                              )))
+                          : Container()
                     ],
                   ),
                 )),

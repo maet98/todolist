@@ -26,7 +26,7 @@ class Task {
         'id': this.id.toString(),
         'title': this.title,
         'due': this.due.toIso8601String(),
-        'status': enumToString(this.status)
+        'status': statusToString(this.status)
       };
 
   String toString() {

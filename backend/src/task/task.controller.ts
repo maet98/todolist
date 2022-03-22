@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException,
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { Task } from './entities/task.entity';
+import { Status, Task } from './entities/task.entity';
 
 @Controller('task')
 export class TaskController {
@@ -10,13 +10,8 @@ export class TaskController {
 
   @Post()
   async create(@Body() task: Task) {
-    try {
-      const savedTask: Task =  await this.taskService.create(task);
-      return savedTask;
-    } catch(exception) {
-      throw new BadRequestException(exception)
-    }
-
+    const savedTask: Task =  await this.taskService.create(task);
+    return savedTask;
   }
 
   @Get()
@@ -31,8 +26,12 @@ export class TaskController {
   }
 
   @Get("status/:status")
-  async findByStatus(@Param('status') status: String) {
-    return await this.taskService.findByStatus(status);
+  async findByStatus(@Param('status') status: Status) {
+    if (Object.keys(Status).includes(status)) {
+      return await this.taskService.findByStatus(status);
+    } else {
+      throw new BadRequestException(`${status} status is not found.`);
+    }
   }
 
 
